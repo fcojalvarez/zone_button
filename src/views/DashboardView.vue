@@ -60,6 +60,7 @@ const editModeZoneHandler = ({zoneId, type}) => {
       @name-edited="changeZoneName"
       @delete-zone="deleteZoneHandler"
       @edit-mode="editModeZoneHandler"
+      @power-device="togglePowerZone"
     />
   </Transition>
 </template>
