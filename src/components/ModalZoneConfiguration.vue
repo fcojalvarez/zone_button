@@ -3,7 +3,10 @@ import { ref, nextTick  } from 'vue';
 import { PencilIcon, PowerIcon, SaveIcon, CoolingIcon, HeatingIcon } from './';
 
 const props = defineProps({
-    zone: Object
+    zone: {
+        type: Object,
+        required: true
+    }
 })
 
 const inputNameRef = ref(null);
@@ -35,8 +38,12 @@ const emit = defineEmits(['name-edited', 'edit-desired-temperature', 'close', 'd
             <header>
                 <div class="d-flex">
                     <input ref="inputNameRef" type="text" :disabled="isDisabled" v-model="inputModel">
-                    <pencil-icon v-if="!isEditing" :width="20" :height="20" class="pointer" @click="activeEditHandler"/>
-                    <save-icon v-else :width="20" :height="20" class="pointer" @click="saveRoomNameHandler"/>
+                    <button v-if="!isEditing" class="edit-btn" @click="activeEditHandler">
+                        <pencil-icon :width="20" :height="20" />
+                    </button>
+                    <button v-else class="save-btn" @click="saveRoomNameHandler">
+                        <save-icon :width="20" :height="20" />
+                    </button>
                 </div>
                 <button class="close-btn button-hover-shadow" @click="$emit('close')">X</button>
             </header>
@@ -50,14 +57,14 @@ const emit = defineEmits(['name-edited', 'edit-desired-temperature', 'close', 'd
             </div>
 
             <div class="container-buttons">
-                <button class="button-hover-shadow" @click="$emit('edit-desired-temperature', {type:'decrease', zoneId: zone.id})">-</button>
-                <button class="button-hover-shadow" @click="$emit('edit-desired-temperature', {type:'increase', zoneId: zone.id})">+</button>
+                <button id="decrease-btn" class="button-hover-shadow" @click="$emit('edit-desired-temperature', {type:'decrease', zoneId: zone.id})">-</button>
+                <button id="increase-btn" class="button-hover-shadow" @click="$emit('edit-desired-temperature', {type:'increase', zoneId: zone.id})">+</button>
             </div>
             <div class="container-buttons">
-                <button class="button-hover-shadow btn-with-icons" @click="$emit('edit-mode', {type:'cooling', zoneId: zone.id})">
+                <button id="cooling-btn" class="button-hover-shadow btn-with-icons" @click="$emit('edit-mode', {type:'cooling', zoneId: zone.id})">
                     <cooling-icon color="#0000AA" width="24"/>
                 </button>
-                <button class="button-hover-shadow btn-with-icons" @click="$emit('edit-mode', {type:'heating', zoneId: zone.id})">
+                <button id="heating-btn" class="button-hover-shadow btn-with-icons" @click="$emit('edit-mode', {type:'heating', zoneId: zone.id})">
                     <heating-icon color="#DD0000" width="24"/>
                 </button>
             </div>
@@ -115,6 +122,8 @@ section.modal-container {
             cursor: pointer;
             border: none;
             background: transparent;
+        }
+        button:not(.edit-btn,.save-btn) {
             position: absolute;
             top: 15px;
             right: 15px;

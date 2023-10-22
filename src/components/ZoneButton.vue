@@ -1,3 +1,7 @@
+<script>
+export default { name: "zone-button" };
+</script>
+
 <script setup>
 import { computed } from 'vue';
 import { PowerIcon, HeatingIcon, CoolingIcon } from './index';
@@ -58,11 +62,11 @@ const emit = defineEmits(['power-device', 'open-info-zone'])
         <transition>
             <heating-icon
                 v-if="zone.isInOperation && test === 'heating'"
-                class="icon-background rotating" 
+                class="heating-icon rotating" 
             />
             <cooling-icon
                 v-else-if="zone.isInOperation && test === 'cooling'"
-                class="icon-background rotating"  
+                class="cooling-icon rotating"  
             />
         </transition>
 
@@ -202,7 +206,7 @@ const emit = defineEmits(['power-device', 'open-info-zone'])
         }
     }
 
-    .icon-background {
+    .heating-icon, .cooling-icon {
         position: absolute;
         width: 100px;
         height: 100px;
