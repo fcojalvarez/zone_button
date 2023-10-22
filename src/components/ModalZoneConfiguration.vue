@@ -1,6 +1,6 @@
 <script setup>
 import { ref, nextTick  } from 'vue';
-import { PencilIcon, SaveIcon, CoolingIcon, HeatingIcon } from './';
+import { PencilIcon, PowerIcon, SaveIcon, CoolingIcon, HeatingIcon } from './';
 
 const props = defineProps({
     zone: Object
@@ -26,7 +26,7 @@ const activeEditHandler = () => {
     })
 }
 
-const emit = defineEmits(['name-edited', 'edit-desired-temperature', 'close', 'delete-zone', 'edit-mode'])
+const emit = defineEmits(['name-edited', 'edit-desired-temperature', 'close', 'delete-zone', 'edit-mode', 'power-device'])
 </script>
 
 <template>
@@ -54,11 +54,16 @@ const emit = defineEmits(['name-edited', 'edit-desired-temperature', 'close', 'd
                 <button class="button-hover-shadow" @click="$emit('edit-desired-temperature', {type:'increase', zoneId: zone.id})">+</button>
             </div>
             <div class="container-buttons">
-                <button class="button-hover-shadow mode-btn" @click="$emit('edit-mode', {type:'cooling', zoneId: zone.id})">
+                <button class="button-hover-shadow btn-with-icons" @click="$emit('edit-mode', {type:'cooling', zoneId: zone.id})">
                     <cooling-icon color="#0000AA" width="24"/>
                 </button>
-                <button class="button-hover-shadow mode-btn" @click="$emit('edit-mode', {type:'heating', zoneId: zone.id})">
+                <button class="button-hover-shadow btn-with-icons" @click="$emit('edit-mode', {type:'heating', zoneId: zone.id})">
                     <heating-icon color="#DD0000" width="24"/>
+                </button>
+            </div>
+            <div class="container-buttons">
+                <button class="button-hover-shadow power-button btn-with-icons" @click="$emit('power-device', {zoneId: zone.id})">
+                    <power-icon />
                 </button>
             </div>
 
@@ -135,11 +140,16 @@ section.modal-container {
             background: #eee;
             font-size: 1.5rem;
             cursor: pointer;
+
+            &.power-button {
+                width: 7rem;
+                height: 3rem;
+            }
         }
         button:hover {
             background: #ddd;
         }
-        .mode-btn {
+        .btn-with-icons {
             display: flex;
             justify-content: center;
             align-items: center;

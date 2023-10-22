@@ -17,7 +17,8 @@ export const useZoneStore = defineStore('zone', () => {
       id,
       name: 'New zone',
       temperatures: { ambient: 19, desired: 24 },
-      isInOperation: false
+      isInOperation: false,
+      status: 'heating'
     });
   }
 
